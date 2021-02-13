@@ -1,14 +1,13 @@
-#include <cstdio>
 #include <string>
 
 #include "account.h"
 
 using std::string;
 
-void Account::add(unsigned int tpounds, unsigned int tpence)
+void Account::add(const unsigned int pounds, const unsigned int pence)
 {
-	pounds_ += tpounds;
-	pence_ += tpence;
+	pounds_ += pounds;
+	pence_ += pence;
 
 	// Ensure pence_ stays in the range 0-99.
 	if (pence_ >= 100) {
@@ -17,9 +16,14 @@ void Account::add(unsigned int tpounds, unsigned int tpence)
 	}
 }
 
-string Account::total()
+double Account::total() const
 {
-	char buf[40];
-	snprintf(buf, sizeof buf, "%u.%02u", pounds_, pence_);
-	return string(buf);
+	double total = pounds_;
+	total += static_cast<double>(pence_) / 100;
+	return total;
+}
+
+void Account::reset_total()
+{
+	pounds_ = pence_ = 0;
 }

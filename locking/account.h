@@ -1,8 +1,6 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-#include <string>
-
 /** An Account keeps track of a non-negative amount of money, expressed in
 pounds and pence -- e.g. the total of a restaurant bill. */
 class Account
@@ -12,7 +10,13 @@ public:
 	void add(unsigned int pounds, unsigned int pence);
 
 	/** Retrieve the total, formatted as a string (e.g. "GBP 4.95"). */
-	std::string total();
+	//std::string total();
+
+	/** Retrieve the total as double */
+	double total() const;
+
+	/** Reset the current total to 0*/
+	void reset_total();
 
 private:
 	unsigned int pounds_ = 0;
