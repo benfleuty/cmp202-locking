@@ -2,6 +2,7 @@
 #define ACCOUNT_H
 
 #include <string>
+#include <mutex>
 
 /** An Account keeps track of a non-negative amount of money, expressed in
 pounds and pence -- e.g. the total of a restaurant bill. */
@@ -17,6 +18,8 @@ public:
 private:
 	unsigned int pounds_ = 0;
 	unsigned int pence_ = 0;
+
+	std::mutex money_mutex;
 };
 
 #endif

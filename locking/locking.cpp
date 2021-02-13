@@ -6,6 +6,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <chrono>
 
 #include "account.h"
 
@@ -13,6 +14,10 @@
 using std::cout;
 using std::endl;
 using std::thread;
+
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
+using std::chrono::steady_clock;
 
 Account bill;
 
@@ -33,6 +38,8 @@ int main(int argc, char* argv[])
 		<< std::setw(std::to_string(expected).size() - bill.total().size())
 		<< bill.total() << "\n";
 
+	const auto start = steady_clock::now();
+
 	std::vector<thread> threads;
 
 	for (auto i = 0; i < thread_count; ++i)
@@ -41,9 +48,15 @@ int main(int argc, char* argv[])
 	for (auto i = 0; i < thread_count; ++i)
 		threads[i].join();
 
+	const auto end = steady_clock::now();
+
 	cout << "Total:\t\t GBP "
 		<< std::setw(std::to_string(expected).size() - bill.total().size())
 		<< bill.total() << "\n";
 
+	cout << endl << "Elapsed time: "
+		<< duration_cast<milliseconds>(end - start).count() << " ms";
+
+	cout << endl << endl;
 	return 0;
 }
